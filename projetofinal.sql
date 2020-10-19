@@ -1,14 +1,14 @@
 --Criando a tabela de clientes
 CREATE TABLE loja.tb_clientes(
-	id_cliente		INTEGER  	CONSTRAINT nn_id_cliente NOT NULL,
-	nome			VARCHAR(50) CONSTRAINT nn_nome 		 NOT NULL,
-	cpf				VARCHAR(11)	CONSTRAINT nn_cpf  		 NOT NULL,
-	endereco		VARCHAR(60),
-	bairro			VARCHAR(30),
-	cep				VARCHAR(9),
-	cidade			VARCHAR(50) CONSTRAINT nn_cidade	 NOT NULL,
-	UF				CHAR(2),
-	telefone		VARCHAR(11) CONSTRAINT nn_telefone	 NOT NULL,
+	id_cliente	INTEGER  	CONSTRAINT nn_id_cliente NOT NULL,
+	nome		VARCHAR(50) 	CONSTRAINT nn_nome 	 NOT NULL,
+	cpf		VARCHAR(11)	CONSTRAINT nn_cpf  	 NOT NULL,
+	endereco	VARCHAR(60),
+	bairro		VARCHAR(30),
+	cep		VARCHAR(9),
+	cidade		VARCHAR(50) 	CONSTRAINT nn_cidade	 NOT NULL,
+	UF		CHAR(2),
+	telefone	VARCHAR(11) 	CONSTRAINT nn_telefone	 NOT NULL,
 CONSTRAINT pk_id_cliente PRIMARY KEY(id_cliente)
 );
 --Comandos da tabela de clientes
@@ -17,13 +17,13 @@ SELECT * FROM loja.tb_clientes
 
 --Criando a tabela de vinis
 CREATE TABLE loja.tb_vinis(
-	id_vinil	INTEGER		   CONSTRAINT nn_id_vinil NOT NULL,
-	vinil		VARCHAR(60)    CONSTRAINT nn_vinil    NOT NULL,
+	id_vinil	INTEGER		CONSTRAINT nn_id_vinil NOT NULL,
+	vinil		VARCHAR(60)     CONSTRAINT nn_vinil    NOT NULL,
 	artista 	VARCHAR(50),
 	lancamento 	DATE,
-	categoria	VARCHAR(25)    CONSTRAINT nn_genero   NOT NULL,
+	categoria	VARCHAR(25)   	CONSTRAINT nn_genero   NOT NULL,
 	valor		DECIMAL(10,2),
-	estado		VARCHAR(5)	   CONSTRAINT nn_estado   NOT NULL,
+	estado		VARCHAR(5)	CONSTRAINT nn_estado   NOT NULL,
 	tp_uso		VARCHAR(20),
 CONSTRAINT pk_id_vinil PRIMARY KEY(id_vinil)
 );
@@ -49,8 +49,8 @@ SELECT * FROM loja.tb_pedidos
 --Criando a tabela de vinis por pedido
 CREATE TABLE loja.tb_vpedido(
 	id_pedido	INTEGER,
-	id_vinil    INTEGER,
-	qtd			INTEGER CONSTRAINT nn_qtd NOT NULL,
+	id_vinil   	INTEGER,
+	qtd		INTEGER CONSTRAINT nn_qtd NOT NULL,
 CONSTRAINT pk_vpedido PRIMARY KEY(id_vinil,id_pedido),
 CONSTRAINT fk_vinil FOREIGN KEY(id_vinil)
 	REFERENCES loja.tb_vinis(id_vinil),
@@ -64,11 +64,11 @@ SELECT * FROM loja.tb_vpedido
 
 --Criando a tabela de vendas
 CREATE TABLE loja.tb_vendas(
-	id_venda	INTEGER			CONSTRAINT nn_id_venda 	 NOT NULL,
-	vendedor	VARCHAR(20)		CONSTRAINT nn_vendedor   NOT NULL,
+	id_venda	INTEGER		CONSTRAINT nn_id_venda 	 NOT NULL,
+	vendedor	VARCHAR(20)	CONSTRAINT nn_vendedor   NOT NULL,
 	id_pedido       INTEGER,
-	datavenda	DATE			CONSTRAINT nn_datacompra NOT NULL,
-	pagamento 	VARCHAR(10)		CONSTRAINT nn_pagamento  NOT NULL,
+	datavenda	DATE		CONSTRAINT nn_datacompra NOT NULL,
+	pagamento 	VARCHAR(10)	CONSTRAINT nn_pagamento  NOT NULL,
 	CONSTRAINT fk_id_pedido FOREIGN KEY(id_pedido)
 		REFERENCES loja.tb_pedidos(id_pedido)
 );
@@ -336,16 +336,16 @@ inner join loja.tb_vendas it on p.id_pedido = it.id_pedido
 
 --Alteração na tabela de clientes
 create or replace function loja.alterarc(
-	op 				CHAR, 
-	id_clientes		INTEGER,
-	nomes			VARCHAR(50),
-	cpfs			VARCHAR(11),
-	enderecos		VARCHAR(60),
-	bairros			VARCHAR(30),
-	ceps			VARCHAR(9),
-	cidades			VARCHAR(50),
-	UFs				CHAR(2),
-	telefones		VARCHAR(11))  
+	op 		CHAR, 
+	id_clientes	INTEGER,
+	nomes		VARCHAR(50),
+	cpfs		VARCHAR(11),
+	enderecos	VARCHAR(60),
+	bairros		VARCHAR(30),
+	ceps		VARCHAR(9),
+	cidades		VARCHAR(50),
+	UFs		CHAR(2),
+	telefones	VARCHAR(11))  
 returns varchar as  
 $$      
 	begin
@@ -368,7 +368,7 @@ Language plpgsql;
 
 --Alteração na tabela de vinis
 create or replace function loja.alterarv(
-	op			CHAR,
+	op		CHAR,
 	id_vinils	INTEGER,
 	vinils		VARCHAR(60),
 	artistas 	VARCHAR(50),
@@ -399,7 +399,7 @@ Language plpgsql;
 	
 --Alteração na tabela de pedidos
 create or replace function loja.alterarp(
-	op			CHAR,
+	op		CHAR,
 	id_pedidos	INTEGER, 
 	id_clientes	INTEGER, 
 	valors		DECIMAL(10,2))
@@ -426,7 +426,7 @@ select loja.alterarp('u',6, 4, 152.25)
 	
 --Trigger da tabela de pedidos
 create table loja.pedidos_auditoria(
-	operacao 	varchar 		not null,      
+	operacao 	varchar 	not null,      
 	usuario 	varchar 	not null,      
 	dt_hr 		timestamp 	not null,      
 	codigo	 	integer 	not null,      
@@ -468,7 +468,7 @@ for each row execute procedure pedidos_auditoria();
 create or replace function alterarvd(
 	id_vendas	INTEGER,
 	vendedors	VARCHAR(20),
-	id_pedidos  INTEGER,
+	id_pedidos  	INTEGER,
 	datavendas	DATE,
 	pagamentos 	VARCHAR(10)
 returns varchar as  
@@ -489,4 +489,3 @@ $$
 	end
 $$
 Language plpgsql;
-
