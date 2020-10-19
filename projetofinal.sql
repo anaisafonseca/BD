@@ -66,7 +66,7 @@ SELECT * FROM loja.tb_vpedido
 CREATE TABLE loja.tb_vendas(
 	id_venda	INTEGER			CONSTRAINT nn_id_venda 	 NOT NULL,
 	vendedor	VARCHAR(20)		CONSTRAINT nn_vendedor   NOT NULL,
-	id_pedido   INTEGER,
+	id_pedido       INTEGER,
 	datavenda	DATE			CONSTRAINT nn_datacompra NOT NULL,
 	pagamento 	VARCHAR(10)		CONSTRAINT nn_pagamento  NOT NULL,
 	CONSTRAINT fk_id_pedido FOREIGN KEY(id_pedido)
